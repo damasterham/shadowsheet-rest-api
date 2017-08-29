@@ -2,7 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>shadowsheet-api</AssemblyName>
+    <RootNamespace>ShadowAPI</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
