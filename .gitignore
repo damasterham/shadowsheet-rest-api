@@ -1,7 +1,7 @@
 # Additional Exclusions
 ### Project ###
-appsetings.json
-appsetings.*.json
+appsettings.json
+appsettings.*.json
 
 
 # Created by https://www.gitignore.io/api/csharp,visualstudio
