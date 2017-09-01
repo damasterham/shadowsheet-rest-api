@@ -2,8 +2,8 @@
 ### Project ###
 appsettings.json
 appsettings.*.json
-
-wwwwroot/
+wwwroot/
+wwwwroot/*
 ScaffoldingReadMe.txt
 
 
