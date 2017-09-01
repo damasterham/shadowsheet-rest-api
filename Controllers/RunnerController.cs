@@ -10,7 +10,7 @@ using ShadowAPI.Models;
 namespace shadowsheet_api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/Runner")]
     public class RunnerController : Controller
     {
         private readonly RunnerContext _context;
@@ -25,8 +25,6 @@ namespace shadowsheet_api.Controllers
         public IEnumerable<Runner> GetRunner()
         {
             return _context.Runner;
-
-            
         }
 
         // GET: api/Runner/5

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ShadowAPI.Models
 {
-    public class Runner
+    public class Runner : BaseEntity
     {
-        [Key]
-        public long ID { get; set; }
         public virtual Info Info { get; set; }
+        public virtual Skills Skills { get; set; } // or ICollection<Skill>
+        public virtual Attributes Attributes { get; set; }
     }
 }

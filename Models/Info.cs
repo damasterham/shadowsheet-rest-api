@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShadowAPI.Models
 {
-    public class Info
+    public class Info : BaseEntity
     {
-       public long ID { get; set; }
-
         public string RealName { get; set; }
         public List<Alias> Aliases { get; set; } // Maybe viruals
         public Metatype Metatype { get; set; }
@@ -16,6 +14,9 @@ namespace ShadowAPI.Models
         public string Description { get; set; }
         public string Background { get; set; }
         public string ImageURL { get; set; }
+
+        //Optional
+        public Awakened Awakened{ get; set; }
 
 
         public Runner Runner { get; set; }
