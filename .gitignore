@@ -3,6 +3,10 @@
 appsettings.json
 appsettings.*.json
 
+wwwwroot/
+ScaffoldingReadMe.txt
+
+
 
 # Created by https://www.gitignore.io/api/csharp,visualstudio
 
