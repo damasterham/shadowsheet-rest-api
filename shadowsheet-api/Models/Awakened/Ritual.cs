@@ -1,6 +1,6 @@
 ﻿namespace ShadowAPI.Models
 {
-    public class Ritual
+    public class Ritual : NamedEntity
     {
     }
 }

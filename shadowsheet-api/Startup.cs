@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using ShadowAPI.Models;
+using ShadowAPI.Services;
 
 namespace ShadowAPI
 {
@@ -29,6 +30,11 @@ namespace ShadowAPI
 
             services.AddDbContext<RunnerContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RunnerContext")));
+
+            // Perhaps this has a smart way to depency inject this instead
+            // But its a static class, so don't know if that is appropriate
+            // This is probably unoptimal, since it would be lazy loading, if getting from db
+            EnumTools.EnumNameable = new EnumNameable();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

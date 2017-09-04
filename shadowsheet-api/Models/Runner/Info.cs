@@ -6,7 +6,7 @@ namespace ShadowAPI.Models
 {
     public class Info : BaseEntity
     {
-        public string RealName { get; set; }
+        public string RealName { get; set; } 
         public List<Alias> Aliases { get; set; } // Maybe viruals
         public Metatype Metatype { get; set; }
         public string Sex { get; set; }
@@ -16,7 +16,7 @@ namespace ShadowAPI.Models
         public string ImageURL { get; set; }
 
         //Optional
-        public Awakened Awakened{ get; set; }
+        //public Awakened Awakened{ get; set; }
 
 
         public Runner Runner { get; set; }

@@ -12,9 +12,10 @@ using System;
 namespace ShadowAPI.Migrations
 {
     [DbContext(typeof(RunnerContext))]
-    partial class RunnerContextModelSnapshot : ModelSnapshot
+    [Migration("20170904112130_RunnerContactRemoveBaseID")]
+    partial class RunnerContactRemoveBaseID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +149,22 @@ namespace ShadowAPI.Migrations
                     b.ToTable("FundTransaction");
                 });
 
+            modelBuilder.Entity("ShadowAPI.Models.Identification", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<long?>("RunnerID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RunnerID");
+
+                    b.ToTable("Identification");
+                });
+
             modelBuilder.Entity("ShadowAPI.Models.Info", b =>
                 {
                     b.Property<long>("ID");
@@ -176,15 +193,15 @@ namespace ShadowAPI.Migrations
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<long?>("IdentificationID");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Nothing");
 
-                    b.Property<long?>("SINID");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("SINID");
+                    b.HasIndex("IdentificationID");
 
                     b.ToTable("License");
                 });
@@ -251,7 +268,10 @@ namespace ShadowAPI.Migrations
 
             modelBuilder.Entity("ShadowAPI.Models.Runner", b =>
                 {
-                    b.Property<long>("ID");
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("AwakenedID");
 
                     b.Property<string>("Belongings");
 
@@ -262,6 +282,10 @@ namespace ShadowAPI.Migrations
                     b.Property<long?>("PlayerID");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AwakenedID")
+                        .IsUnique()
+                        .HasFilter("[AwakenedID] IS NOT NULL");
 
                     b.HasIndex("EconomyID");
 
@@ -283,22 +307,6 @@ namespace ShadowAPI.Migrations
                     b.HasIndex("ContactID");
 
                     b.ToTable("RunnerContact");
-                });
-
-            modelBuilder.Entity("ShadowAPI.Models.SIN", b =>
-                {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<long?>("RunnerID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RunnerID");
-
-                    b.ToTable("SIN");
                 });
 
             modelBuilder.Entity("ShadowAPI.Models.Skill", b =>
@@ -412,6 +420,13 @@ namespace ShadowAPI.Migrations
                         .HasForeignKey("PreviousTransactionID");
                 });
 
+            modelBuilder.Entity("ShadowAPI.Models.Identification", b =>
+                {
+                    b.HasOne("ShadowAPI.Models.Runner")
+                        .WithMany("Ids")
+                        .HasForeignKey("RunnerID");
+                });
+
             modelBuilder.Entity("ShadowAPI.Models.Info", b =>
                 {
                     b.HasOne("ShadowAPI.Models.Runner", "Runner")
@@ -422,9 +437,9 @@ namespace ShadowAPI.Migrations
 
             modelBuilder.Entity("ShadowAPI.Models.License", b =>
                 {
-                    b.HasOne("ShadowAPI.Models.SIN")
+                    b.HasOne("ShadowAPI.Models.Identification")
                         .WithMany("Licenses")
-                        .HasForeignKey("SINID");
+                        .HasForeignKey("IdentificationID");
                 });
 
             modelBuilder.Entity("ShadowAPI.Models.Metamagic", b =>
@@ -454,14 +469,13 @@ namespace ShadowAPI.Migrations
 
             modelBuilder.Entity("ShadowAPI.Models.Runner", b =>
                 {
+                    b.HasOne("ShadowAPI.Models.Awakened", "Awakened")
+                        .WithOne("Runner")
+                        .HasForeignKey("ShadowAPI.Models.Runner", "AwakenedID");
+
                     b.HasOne("ShadowAPI.Models.Economy", "Economy")
                         .WithMany()
                         .HasForeignKey("EconomyID");
-
-                    b.HasOne("ShadowAPI.Models.Awakened", "Awakened")
-                        .WithOne("Runner")
-                        .HasForeignKey("ShadowAPI.Models.Runner", "ID")
-                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ShadowAPI.Models.User", "Player")
                         .WithMany("Runners")
@@ -479,13 +493,6 @@ namespace ShadowAPI.Migrations
                         .WithMany("Contacts")
                         .HasForeignKey("RunnerID")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ShadowAPI.Models.SIN", b =>
-                {
-                    b.HasOne("ShadowAPI.Models.Runner")
-                        .WithMany("SINs")
-                        .HasForeignKey("RunnerID");
                 });
 
             modelBuilder.Entity("ShadowAPI.Models.Skill", b =>

@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace ShadowAPI.Models.Belongings
 {
-    public class Belongings
+    public class Belongings : BaseEntity
     {
+        public ICollection<Weapon> MyProperty { get; set; }
     }
 }

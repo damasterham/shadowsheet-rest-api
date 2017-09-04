@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShadowAPI.Models.Magic
 {
-    public class Preperation
+    public class Preperation : NamedEntity
     {
-        //huh?
     }
 }

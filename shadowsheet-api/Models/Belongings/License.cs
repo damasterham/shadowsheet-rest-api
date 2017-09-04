@@ -1,8 +1,8 @@
 ﻿namespace ShadowAPI.Models
 {
-    public class License
+    public class License : NamedEntity
     {
-        public string Name { get; set; }
+        public string Nothing { get; set; }
 
 
         // For

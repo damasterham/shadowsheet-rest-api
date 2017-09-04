@@ -12,9 +12,10 @@ using System;
 namespace ShadowAPI.Migrations
 {
     [DbContext(typeof(RunnerContext))]
-    partial class RunnerContextModelSnapshot : ModelSnapshot
+    [Migration("20170904114441_ChangeIdentitiesToSIN")]
+    partial class ChangeIdentitiesToSIN
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

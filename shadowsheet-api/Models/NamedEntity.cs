@@ -5,15 +5,8 @@ using System.Threading.Tasks;
 
 namespace ShadowAPI.Models
 {
-    public class Spell : NamedEntity
+    public abstract class NamedEntity : BaseEntity
     {
-        public int Drain { get; set; } // Minus to Positive
-
-
-
-
-      
-
-    
+        public string Name { get; set; }
     }
 }

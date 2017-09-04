@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShadowAPI.Models
 {
-    public class AdeptPower : BaseEntity
+    public class AdeptPower : NamedEntity
     {
     }
 }

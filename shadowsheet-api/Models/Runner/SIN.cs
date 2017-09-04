@@ -2,9 +2,8 @@
 
 namespace ShadowAPI.Models
 {
-    public class Identification
+    public class SIN : NamedEntity
     {
-        public string Name { get; set; }
         public ICollection<License> Licenses { get; set; }
 
     }

@@ -1,8 +1,7 @@
 ﻿namespace ShadowAPI.Models
 {
-    public class FundTransaction
+    public class FundTransaction : NamedEntity
     {
-        public string Name { get; set; }
         public long Value { get; set; }
         public FundTransaction PreviousTransaction { get; set; }
         public long CurrentValue // Perhaps method, if conflicts with table struture
