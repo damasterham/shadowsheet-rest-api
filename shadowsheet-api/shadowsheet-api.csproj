@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="OldMigrations\**" />
+    <Content Remove="OldMigrations\**" />
+    <EmbeddedResource Remove="OldMigrations\**" />
+    <None Remove="OldMigrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="OldMigrations\RunnerContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>

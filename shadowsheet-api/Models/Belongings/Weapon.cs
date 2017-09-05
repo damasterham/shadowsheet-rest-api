@@ -1,6 +1,6 @@
 ﻿using ShadowAPI.Models.Enums.Belongings;
 
-namespace ShadowAPI.Models.Belongings
+namespace ShadowAPI.Models
 {
     public abstract class Weapon : Item
     {
@@ -9,6 +9,5 @@ namespace ShadowAPI.Models.Belongings
         public abstract int Damage { get; } // Maybe also a base damage asside this
         public DamageType DamageType { get; set; }
         public int ArmourPenetration { get; set; }
-        public int MyProperty { get; set; }
     }
 }

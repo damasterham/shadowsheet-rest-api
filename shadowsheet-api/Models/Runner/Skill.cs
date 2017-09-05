@@ -15,5 +15,9 @@ namespace ShadowAPI.Models
         public ActiveSkillType? ActiveType { get; set; }
         public KnowledgeSkillType? KnowledgeType { get; set; }
 
+        // Possible SkillSpecialization
+        public ICollection<SkillSpecialization> Spectialization{ get; set; }
+
+        public ICollection<RunnerSkill> Runners { get; set; } // Doesn't have to be many to many
     }
 }

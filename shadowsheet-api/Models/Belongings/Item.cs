@@ -1,6 +1,6 @@
 ﻿using ShadowAPI.Models.Enums.Belongings;
 
-namespace ShadowAPI.Models.Belongings
+namespace ShadowAPI.Models
 {
     public abstract class Item : NamedEntity
     {
