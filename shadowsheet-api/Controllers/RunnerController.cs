@@ -91,7 +91,21 @@ namespace shadowsheet_api.Controllers
             }
 
             _context.Runner.Add(runner);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (RunnerExists(runner.ID))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetRunner", new { id = runner.ID }, runner);
         }
