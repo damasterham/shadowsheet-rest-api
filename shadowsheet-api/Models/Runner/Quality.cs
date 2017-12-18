@@ -1,4 +1,6 @@
-﻿namespace ShadowAPI.Models
+﻿using System.Collections.Generic;
+
+namespace ShadowAPI.Models
 {
     public class Quality : NamedEntity
     {
@@ -10,5 +12,7 @@
         public Quality Contradictor { get; private set; } // Maybe collection?
 
         public bool IsPositive { get; set; }// Maybe enum using bool
+
+        public ICollection<RunnerQuality> Runners { get; set; }
     }
 }

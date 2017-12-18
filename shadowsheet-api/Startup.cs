@@ -27,9 +27,9 @@ namespace ShadowAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
             services.AddDbContext<RunnerContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RunnerContext")));
+
 
             // Perhaps this has a smart way to depency inject this instead
             // But its a static class, so don't know if that is appropriate

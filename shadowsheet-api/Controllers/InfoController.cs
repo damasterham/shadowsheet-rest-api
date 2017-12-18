@@ -6,63 +6,61 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShadowAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using ShadowAPI.Models.Extensions;
 
 namespace shadowsheet_api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Runner")]
-    public class RunnerController : Controller
+    [Route("api/runner/{id}/info")]
+    public class InfoController : Controller
     {
         private readonly RunnerContext _context;
 
-        public RunnerController(RunnerContext context)
+        public InfoController(RunnerContext context)
         {
             _context = context;
         }
 
-        // GET: api/Runner
-        [HttpGet]
-        public IEnumerable<Runner> GetRunner()
-        {
-            return _context.Runner.ToList();
-        }
+        // GET: api/Info
+        //[HttpGet]
+        //public IEnumerable<Info> GetInfo()
+        //{
+        //    return _context.Info;
+        //}
 
-        // GET: api/Runner/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRunner([FromRoute] long id)
+        // GET: api/Info/5
+        [HttpGet]
+        public async Task<IActionResult> GetInfo([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
+            var info = await _context.Info.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (runner == null)
+            if (info == null)
             {
                 return NotFound();
             }
 
-            return Ok(runner);
+            return Ok(info);
         }
 
-        // PUT: api/Runner/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRunner([FromRoute] long id, [FromBody] Runner runner)
+        // PUT: api/Info/5
+        [HttpPut]
+        public async Task<IActionResult> PutInfo([FromRoute] long id, [FromBody] Info info)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != runner.ID)
+            if (id != info.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(runner).State = EntityState.Modified;
+            _context.Entry(info).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +68,7 @@ namespace shadowsheet_api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RunnerExists(id))
+                if (!InfoExists(id))
                 {
                     return NotFound();
                 }
@@ -83,48 +81,45 @@ namespace shadowsheet_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Runner
+        // POST: api/Info
         [HttpPost]
-        public async Task<IActionResult> PostRunner([FromBody] Runner runner)
+        public async Task<IActionResult> PostInfo([FromBody] Info info)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Runner.Add(runner);
+            _context.Info.Add(info);
             await _context.SaveChangesAsync();
 
-            runner.ClearNavigationProps();
-
-            //return Created("", runner);
-            return CreatedAtAction("GetRunner", new { id = runner.ID }, runner);
+            return CreatedAtAction("GetInfo", new { id = info.ID }, info);
         }
 
-        // DELETE: api/Runner/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRunner([FromRoute] long id)
+        // DELETE: api/Info/5
+        [HttpDelete]
+        public async Task<IActionResult> DeleteInfo([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
-            if (runner == null)
+            var info = await _context.Info.SingleOrDefaultAsync(m => m.ID == id);
+            if (info == null)
             {
                 return NotFound();
             }
 
-            _context.Runner.Remove(runner);
+            _context.Info.Remove(info);
             await _context.SaveChangesAsync();
 
-            return Ok(runner);
+            return Ok(info);
         }
 
-        private bool RunnerExists(long id)
+        private bool InfoExists(long id)
         {
-            return _context.Runner.Any(e => e.ID == id);
+            return _context.Info.Any(e => e.ID == id);
         }
     }
 }

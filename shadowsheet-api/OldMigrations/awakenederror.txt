@@ -1,0 +1,218 @@
+﻿Each package is licensed to you by its owner. NuGet is not responsible for, nor does it grant any licenses to, third-party packages. Some packages may include dependencies which are governed by additional licenses. Follow the package source (feed) URL to determine any dependencies.
+
+Package Manager Console Host Version 4.3.0.4339
+
+Type 'get-help NuGet' to see all available NuGet commands.
+
+PM> add-migration InitialMigration
+To undo this action, use Remove-Migration.
+PM> update-database
+Applying migration '20170908120830_InitialMigration'.
+Failed executing DbCommand (16ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ShadowSheet].[Runner] (
+    [ID] bigint NOT NULL IDENTITY,
+    [Agility] int NOT NULL,
+    [Body] int NOT NULL,
+    [Charisma] int NOT NULL,
+    [Edge] int NOT NULL,
+    [Essence] real NOT NULL,
+    [Intuition] int NOT NULL,
+    [Logic] int NOT NULL,
+    [Magic] int NOT NULL,
+    [Reaction] int NOT NULL,
+    [Resonance] int NOT NULL,
+    [Strength] int NOT NULL,
+    [Willpower] int NOT NULL,
+    [Background] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [Ethnicity] nvarchar(max) NULL,
+    [ImageURL] nvarchar(max) NULL,
+    [Metatype] tinyint NOT NULL,
+    [RealName] nvarchar(max) NULL,
+    [Sex] nvarchar(max) NULL,
+    [BelongingsID] bigint NULL,
+    [EconomyID] bigint NULL,
+    [PlayerID] bigint NULL,
+    CONSTRAINT [PK_Runner] PRIMARY KEY ([ID]),
+    CONSTRAINT [FK_Runner_Belongings_BelongingsID] FOREIGN KEY ([BelongingsID]) REFERENCES [ShadowSheet].[Belongings] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Runner_Economy_EconomyID] FOREIGN KEY ([EconomyID]) REFERENCES [ShadowSheet].[Economy] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Runner_Awakened_ID] FOREIGN KEY ([ID]) REFERENCES [ShadowSheet].[Awakened] ([ID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Runner_User_PlayerID] FOREIGN KEY ([PlayerID]) REFERENCES [ShadowSheet].[User] ([ID]) ON DELETE NO ACTION
+);
+fail: Microsoft.EntityFrameworkCore.Database.Command[200102]
+      Failed executing DbCommand (16ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ShadowSheet].[Runner] (
+          [ID] bigint NOT NULL IDENTITY,
+          [Agility] int NOT NULL,
+          [Body] int NOT NULL,
+          [Charisma] int NOT NULL,
+          [Edge] int NOT NULL,
+          [Essence] real NOT NULL,
+          [Intuition] int NOT NULL,
+          [Logic] int NOT NULL,
+          [Magic] int NOT NULL,
+          [Reaction] int NOT NULL,
+          [Resonance] int NOT NULL,
+          [Strength] int NOT NULL,
+          [Willpower] int NOT NULL,
+          [Background] nvarchar(max) NULL,
+          [Description] nvarchar(max) NULL,
+          [Ethnicity] nvarchar(max) NULL,
+          [ImageURL] nvarchar(max) NULL,
+          [Metatype] tinyint NOT NULL,
+          [RealName] nvarchar(max) NULL,
+          [Sex] nvarchar(max) NULL,
+          [BelongingsID] bigint NULL,
+          [EconomyID] bigint NULL,
+          [PlayerID] bigint NULL,
+          CONSTRAINT [PK_Runner] PRIMARY KEY ([ID]),
+          CONSTRAINT [FK_Runner_Belongings_BelongingsID] FOREIGN KEY ([BelongingsID]) REFERENCES [ShadowSheet].[Belongings] ([ID]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_Runner_Economy_EconomyID] FOREIGN KEY ([EconomyID]) REFERENCES [ShadowSheet].[Economy] ([ID]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_Runner_Awakened_ID] FOREIGN KEY ([ID]) REFERENCES [ShadowSheet].[Awakened] ([ID]) ON DELETE CASCADE,
+          CONSTRAINT [FK_Runner_User_PlayerID] FOREIGN KEY ([PlayerID]) REFERENCES [ShadowSheet].[User] ([ID]) ON DELETE NO ACTION
+      );
+System.Data.SqlClient.SqlException (0x80131904): Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite, String methodName)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+ClientConnectionId:19aa5475-7df4-4169-a873-daddf0d1e466
+Error Number:1788,State:0,Class:16
+System.Data.SqlClient.SqlException (0x80131904): Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite, String methodName)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteNonQuery(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Migrations.MigrationCommand.ExecuteNonQuery(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQuery(IEnumerable`1 migrationCommands, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.Design.Internal.MigrationsOperations.UpdateDatabase(String targetMigration, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.UpdateDatabase.<>c__DisplayClass0_1.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+ClientConnectionId:19aa5475-7df4-4169-a873-daddf0d1e466
+Error Number:1788,State:0,Class:16
+Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+PM> remove-migration
+Reverting model snapshot.
+Done.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Tools.Json.Escape(String text)
+   at Microsoft.EntityFrameworkCore.Tools.Commands.MigrationsRemoveCommand.ReportJsonResults(IDictionary result)
+   at Microsoft.EntityFrameworkCore.Tools.Commands.MigrationsRemoveCommand.Execute()
+   at Microsoft.DotNet.Cli.CommandLine.CommandLineApplication.Execute(String[] args)
+   at Microsoft.EntityFrameworkCore.Tools.Program.Main(String[] args)
+Object reference not set to an instance of an object.
+{
+PM> add-migration InitialMigration
+To undo this action, use Remove-Migration.
+PM> update-database
+Applying migration '20170908121621_InitialMigration'.
+Failed executing DbCommand (19ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ShadowSheet].[Runner] (
+    [ID] bigint NOT NULL IDENTITY,
+    [Agility] int NOT NULL,
+    [Body] int NOT NULL,
+    [Charisma] int NOT NULL,
+    [Edge] int NOT NULL,
+    [Essence] real NOT NULL,
+    [Intuition] int NOT NULL,
+    [Logic] int NOT NULL,
+    [Magic] int NOT NULL,
+    [Reaction] int NOT NULL,
+    [Resonance] int NOT NULL,
+    [Strength] int NOT NULL,
+    [Willpower] int NOT NULL,
+    [Background] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [Ethnicity] nvarchar(max) NULL,
+    [ImageURL] nvarchar(max) NULL,
+    [Metatype] tinyint NOT NULL,
+    [RealName] nvarchar(max) NULL,
+    [Sex] nvarchar(max) NULL,
+    [BelongingsID] bigint NULL,
+    [EconomyID] bigint NULL,
+    [PlayerID] bigint NULL,
+    CONSTRAINT [PK_Runner] PRIMARY KEY ([ID]),
+    CONSTRAINT [FK_Runner_Belongings_BelongingsID] FOREIGN KEY ([BelongingsID]) REFERENCES [ShadowSheet].[Belongings] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Runner_Economy_EconomyID] FOREIGN KEY ([EconomyID]) REFERENCES [ShadowSheet].[Economy] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Runner_Awakened_ID] FOREIGN KEY ([ID]) REFERENCES [ShadowSheet].[Awakened] ([ID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Runner_User_PlayerID] FOREIGN KEY ([PlayerID]) REFERENCES [ShadowSheet].[User] ([ID]) ON DELETE NO ACTION
+);
+fail: Microsoft.EntityFrameworkCore.Database.Command[200102]
+      Failed executing DbCommand (19ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ShadowSheet].[Runner] (
+          [ID] bigint NOT NULL IDENTITY,
+          [Agility] int NOT NULL,
+          [Body] int NOT NULL,
+          [Charisma] int NOT NULL,
+          [Edge] int NOT NULL,
+          [Essence] real NOT NULL,
+          [Intuition] int NOT NULL,
+          [Logic] int NOT NULL,
+          [Magic] int NOT NULL,
+          [Reaction] int NOT NULL,
+          [Resonance] int NOT NULL,
+          [Strength] int NOT NULL,
+          [Willpower] int NOT NULL,
+          [Background] nvarchar(max) NULL,
+          [Description] nvarchar(max) NULL,
+          [Ethnicity] nvarchar(max) NULL,
+          [ImageURL] nvarchar(max) NULL,
+          [Metatype] tinyint NOT NULL,
+          [RealName] nvarchar(max) NULL,
+          [Sex] nvarchar(max) NULL,
+          [BelongingsID] bigint NULL,
+          [EconomyID] bigint NULL,
+          [PlayerID] bigint NULL,
+          CONSTRAINT [PK_Runner] PRIMARY KEY ([ID]),
+          CONSTRAINT [FK_Runner_Belongings_BelongingsID] FOREIGN KEY ([BelongingsID]) REFERENCES [ShadowSheet].[Belongings] ([ID]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_Runner_Economy_EconomyID] FOREIGN KEY ([EconomyID]) REFERENCES [ShadowSheet].[Economy] ([ID]) ON DELETE NO ACTION,
+          CONSTRAINT [FK_Runner_Awakened_ID] FOREIGN KEY ([ID]) REFERENCES [ShadowSheet].[Awakened] ([ID]) ON DELETE CASCADE,
+          CONSTRAINT [FK_Runner_User_PlayerID] FOREIGN KEY ([PlayerID]) REFERENCES [ShadowSheet].[User] ([ID]) ON DELETE NO ACTION
+      );
+System.Data.SqlClient.SqlException (0x80131904): Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite, String methodName)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+ClientConnectionId:ad53b847-8222-41e3-b2c9-b8514c539ed5
+Error Number:1788,State:0,Class:16
+System.Data.SqlClient.SqlException (0x80131904): Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite, String methodName)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteNonQuery(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Migrations.MigrationCommand.ExecuteNonQuery(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQuery(IEnumerable`1 migrationCommands, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.Design.Internal.MigrationsOperations.UpdateDatabase(String targetMigration, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.UpdateDatabase.<>c__DisplayClass0_1.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+ClientConnectionId:ad53b847-8222-41e3-b2c9-b8514c539ed5
+Error Number:1788,State:0,Class:16
+Cascading foreign key 'FK_Runner_Awakened_ID' cannot be created where the referencing column 'Runner.ID' is an identity column.
+Could not create constraint or index. See previous errors.
+PM> 

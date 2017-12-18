@@ -6,63 +6,61 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShadowAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using ShadowAPI.Models.Extensions;
 
 namespace shadowsheet_api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Runner")]
-    public class RunnerController : Controller
+    [Route("api/User")]
+    public class UserController : Controller
     {
         private readonly RunnerContext _context;
 
-        public RunnerController(RunnerContext context)
+        public UserController(RunnerContext context)
         {
             _context = context;
         }
 
-        // GET: api/Runner
+        // GET: api/User
         [HttpGet]
-        public IEnumerable<Runner> GetRunner()
+        public IEnumerable<User> GetUser()
         {
-            return _context.Runner.ToList();
+            return _context.User;
         }
 
-        // GET: api/Runner/5
+        // GET: api/User/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRunner([FromRoute] long id)
+        public async Task<IActionResult> GetUser([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
+            var user = await _context.User.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (runner == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(runner);
+            return Ok(user);
         }
 
-        // PUT: api/Runner/5
+        // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRunner([FromRoute] long id, [FromBody] Runner runner)
+        public async Task<IActionResult> PutUser([FromRoute] long id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != runner.ID)
+            if (id != user.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(runner).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +68,7 @@ namespace shadowsheet_api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RunnerExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -83,48 +81,58 @@ namespace shadowsheet_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Runner
+        // POST: api/User
         [HttpPost]
-        public async Task<IActionResult> PostRunner([FromBody] Runner runner)
+        public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Runner.Add(runner);
+            if (UserExists(user.Name))
+            {
+                return BadRequest("User with username " + user.Name + " already exists");
+            }
+
+            // Deny passwords for now
+            user.Password = null;
+
+            _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            runner.ClearNavigationProps();
-
-            //return Created("", runner);
-            return CreatedAtAction("GetRunner", new { id = runner.ID }, runner);
+            return CreatedAtAction("GetUser", new { id = user.ID }, user);
         }
 
-        // DELETE: api/Runner/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRunner([FromRoute] long id)
+        public async Task<IActionResult> DeleteUser([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
-            if (runner == null)
+            var user = await _context.User.SingleOrDefaultAsync(m => m.ID == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Runner.Remove(runner);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
 
-            return Ok(runner);
+            return Ok(user);
         }
 
-        private bool RunnerExists(long id)
+        private bool UserExists(string name)
         {
-            return _context.Runner.Any(e => e.ID == id);
+            return _context.User.Any(u => u.Name == name);
+        }
+
+        private bool UserExists(long id)
+        {
+            return _context.User.Any(e => e.ID == id);
         }
     }
 }

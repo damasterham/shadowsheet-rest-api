@@ -10,10 +10,12 @@ namespace ShadowAPI.Models
 {
     public class RunnerContext : DbContext
     {
-        private ICollection<Type> _entityClasses = new List<Type>(
-            ReflectionTools.GetTypes(Assembly.GetExecutingAssembly(), "ShadowAPI.Models"));
+        //private ICollection<Type> _entityClasses = new List<Type>(
+        //    ReflectionTools.GetTypes(Assembly.GetExecutingAssembly(), "ShadowAPI.Models"));
 
         //ICollection<Type> _entityClasses = new List<Type>(ReflectionTools.GetTypes(ass, "ShadowAPI.Models"));
+
+        
 
         public RunnerContext (DbContextOptions<RunnerContext> options)
             : base(options)
@@ -22,7 +24,7 @@ namespace ShadowAPI.Models
 
         public DbSet<AdeptPower> AdeptPower { get; set; }
         public DbSet<Alias> Alias { get; set; }
-        public DbSet<Awakened> Awakened { get; set; }
+        //public DbSet<Awakened> Awakened { get; set; }
         public DbSet<Contact> Contact { get; set; }
 
         public DbSet<SIN> SIN { get; set; }
@@ -45,12 +47,25 @@ namespace ShadowAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Define Default Schema
+            // ! Causes permission error when defining schema. Probalby would have to create the schema first or sum such
+            // for now just easier to run with defualt dbo !
             modelBuilder.HasDefaultSchema("ShadowSheet");
 
             // Excluded Entities
             modelBuilder.Ignore<Item>();
             modelBuilder.Ignore<Weapon>();
 
+            //Ignoring collection groupings since they are complex and not needed yet
+            modelBuilder.Ignore<Awakened>();
+            modelBuilder.Ignore<Belongings>();
+
+
+            //// Give primary ID for each table a unique name coresponding to class name
+            //foreach (Type entity in _entityClasses)
+            //{
+            //    modelBuilder.Entity(entity.Name)
+            //        .HasKey(entity.Name + "_")
+            //}
 
             // Attributes -> Runner
             modelBuilder.Entity<Runner>()
@@ -65,6 +80,12 @@ namespace ShadowAPI.Models
                 .HasForeignKey<Info>(x => x.ID);
 
             // Awakened <-> Runner
+
+            // Awakened and Belongsings are many to many?
+
+            //modelBuilder.Entity<Runner>()
+            //    .Property(b => b.Awakened)
+            //    .HasColumnName("blog_id");
 
 
             // Attributes & Info bind to Runner table
@@ -104,6 +125,21 @@ namespace ShadowAPI.Models
                 .HasOne(rs => rs.Skill)
                 .WithMany(s => s.Runners)
                 .HasForeignKey(rs => rs.RunnerID);
+
+            //RunnerContact Many to Many relationship
+            // Doesn't have to be many to many
+            modelBuilder.Entity<RunnerQuality>()
+                .HasKey(rq => new { rq.RunnerID, rq.QualityID });
+
+            modelBuilder.Entity<RunnerQuality>()
+                .HasOne(rq => rq.Runner)
+                .WithMany(r => r.Qualities)
+                .HasForeignKey(rq => rq.RunnerID);
+
+            modelBuilder.Entity<RunnerQuality>()            
+                .HasOne(rq => rq.Quality)
+                .WithMany(q => q.Runners)
+                .HasForeignKey(rq => rq.RunnerID);
 
 
 

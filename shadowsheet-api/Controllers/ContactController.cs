@@ -6,63 +6,61 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShadowAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using ShadowAPI.Models.Extensions;
 
 namespace shadowsheet_api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Runner")]
-    public class RunnerController : Controller
+    [Route("api/Contact")]
+    public class ContactController : Controller
     {
         private readonly RunnerContext _context;
 
-        public RunnerController(RunnerContext context)
+        public ContactController(RunnerContext context)
         {
             _context = context;
         }
 
-        // GET: api/Runner
+        // GET: api/Contact
         [HttpGet]
-        public IEnumerable<Runner> GetRunner()
+        public IEnumerable<Contact> GetContact()
         {
-            return _context.Runner.ToList();
+            return _context.Contact;
         }
 
-        // GET: api/Runner/5
+        // GET: api/Contact/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRunner([FromRoute] long id)
+        public async Task<IActionResult> GetContact([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
+            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (runner == null)
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return Ok(runner);
+            return Ok(contact);
         }
 
-        // PUT: api/Runner/5
+        // PUT: api/Contact/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRunner([FromRoute] long id, [FromBody] Runner runner)
+        public async Task<IActionResult> PutContact([FromRoute] long id, [FromBody] Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != runner.ID)
+            if (id != contact.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(runner).State = EntityState.Modified;
+            _context.Entry(contact).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +68,7 @@ namespace shadowsheet_api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RunnerExists(id))
+                if (!ContactExists(id))
                 {
                     return NotFound();
                 }
@@ -83,48 +81,45 @@ namespace shadowsheet_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Runner
+        // POST: api/Contact
         [HttpPost]
-        public async Task<IActionResult> PostRunner([FromBody] Runner runner)
+        public async Task<IActionResult> PostContact([FromBody] Contact contact)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Runner.Add(runner);
+            _context.Contact.Add(contact);
             await _context.SaveChangesAsync();
 
-            runner.ClearNavigationProps();
-
-            //return Created("", runner);
-            return CreatedAtAction("GetRunner", new { id = runner.ID }, runner);
+            return CreatedAtAction("GetContact", new { id = contact.ID }, contact);
         }
 
-        // DELETE: api/Runner/5
+        // DELETE: api/Contact/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRunner([FromRoute] long id)
+        public async Task<IActionResult> DeleteContact([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var runner = await _context.Runner.SingleOrDefaultAsync(m => m.ID == id);
-            if (runner == null)
+            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ID == id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            _context.Runner.Remove(runner);
+            _context.Contact.Remove(contact);
             await _context.SaveChangesAsync();
 
-            return Ok(runner);
+            return Ok(contact);
         }
 
-        private bool RunnerExists(long id)
+        private bool ContactExists(long id)
         {
-            return _context.Runner.Any(e => e.ID == id);
+            return _context.Contact.Any(e => e.ID == id);
         }
     }
 }

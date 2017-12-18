@@ -1,4 +1,6 @@
-﻿namespace ShadowAPI.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace ShadowAPI.Models
 {
     public class Attributes : BaseEntity
     {
@@ -15,6 +17,7 @@
         public int Magic { get; set; }
         public int Resonance { get; set; }
 
+        //[BindNever]
         public Runner Runner { get; set; }
     }
 }

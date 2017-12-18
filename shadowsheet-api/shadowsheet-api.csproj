@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove=".gitignore" />
+    <Compile Remove="Controllers\ValuesController.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="OldMigrations\RunnerContextModelSnapshot.cs" />
+    <None Remove=".gitignore" />
   </ItemGroup>
 
   <ItemGroup>

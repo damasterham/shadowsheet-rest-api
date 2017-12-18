@@ -17,9 +17,4 @@ namespace ShadowAPI.Models
             return this.GetType().Name;
         }
     }
-
-    public class SomeEntity : BaseEntity
-    {
-
-    }
 }

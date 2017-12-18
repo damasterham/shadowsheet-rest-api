@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,7 +19,7 @@ namespace ShadowAPI.Models
         //Optional
         //public Awakened Awakened{ get; set; }
 
-
+        [BindNever]
         public Runner Runner { get; set; }
     }
 }
